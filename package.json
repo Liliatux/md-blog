@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/elgamine-dev/md-blog#readme",
   "dependencies": {
+    "express": "^4.14.0",
     "jquery": "^3.1.1",
     "semantic-ui-css": "^2.2.4",
     "showdown": "^1.4.3"

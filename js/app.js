@@ -1,12 +1,13 @@
 (function(){
 	"use strict";
 	var app = {
-		urlAlice:'http://192.168.1.40:1337/alice.md',
-		urlMenu: 'http://192.168.1.40:1337/menu.json',
+		urlAlice:'http://localhost:8000/static/alice.md',
+		urlMenu: 'http://localhost:8000/static/menu.json',
 
 		init:function(){
 			this.ajaxAlice();
 			this.ajaxMenu();
+
 		},
 
 		ajaxAlice: function(){
@@ -30,11 +31,10 @@
 		},
 
 		ajaxDoneMenu: function(menu){
-			var lien = 'http://192.168.1.40:1337';
+			var url = 'http://localhost:8000';
 			var allMenu = menu.menu;
-			console.log(allMenu);
 			for(var i = 0; i < allMenu.length; i++){
-				$('ul').append('<li><a data-lien='+ allMenu[i].path+' href='+lien+allMenu[i].path+'>' + allMenu[i].title + '</a></li>');
+				$('ul').append('<li><a href='+url+allMenu[i].path+'>' + allMenu[i].title + '</a></li>');
 			}
 		},
 
