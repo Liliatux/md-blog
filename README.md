@@ -1,13 +1,6 @@
 MD-Blog
 ---
-
-Créez un mini blog (un seul post au début). 
-Pour commencer, forkez ce repo, puis clonez le, une fois ceci fait  `npm install` pour récuperer les dépendances. (jquery et semantic-ui-css)
-Votre code JS doit aller dans `js/app.js`, votre CSS dans `css/style.css`
-
-NB: n'oubliez pas de lancez Caddy (sans quoi les fichiers liés ne marcheront pas) et Browser-Sync
-
-## Etape 1
+## Etape 1: FINI
 - Récuperez le fichier markdown du serveur distant
 - transformez le en HTML grace à showdown
 - insérez le dans votre page html dans un element `<div id="md">` que vous aurez créé auparavant

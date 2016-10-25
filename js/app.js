@@ -1,19 +1,19 @@
 (function(){
 	"use strict";
 	var app = {
+		url:'http://192.168.1.21:1337/alice.md',
+
 		init:function(){
-			var url = 'http://192.168.1.21:1337/alice.md'
-			$.ajax(url)
+			$.ajax(this.url)
 			.done(this.ajaxDone)
 			.fail(this.ajaxFail)
 			.always(this.ajaxAlways);
 		},
 
 		ajaxDone: function(alice){
-			var alice = alice;
 			var converter = new showdown.Converter();
-			text = $('#md').text(alice);
-			html = converter.makeHTML(text);			
+			var html = converter.makeHtml(alice);
+			$('#md').text(html);			
 		},
 
 		ajaxFail: function(){
@@ -22,7 +22,7 @@
 
 		ajaxAlways: function(){
 			console.log('always');
-		},
+		}
 	};
 
 
