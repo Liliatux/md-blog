@@ -30,10 +30,11 @@
 		},
 
 		ajaxDoneMenu: function(menu){
+			var lien = 'http://192.168.1.40:1337';
 			var allMenu = menu.menu;
 			console.log(allMenu);
 			for(var i = 0; i < allMenu.length; i++){
-				$('ul').append('<li><a data-lien='+i+'href="#">' + allMenu[i].title + '</a></li>');
+				$('ul').append('<li><a data-lien='+ allMenu[i].path+' href='+lien+allMenu[i].path+'>' + allMenu[i].title + '</a></li>');
 			}
 		},
 
