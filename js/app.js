@@ -1,8 +1,8 @@
 (function(){
 	"use strict";
 	var app = {
-		urlAlice:'http://192.168.1.21:1337/alice.md',
-		urlMenu: 'http://192.168.1.21:1337/menu.json',
+		urlAlice:'http://192.168.1.40:1337/alice.md',
+		urlMenu: 'http://192.168.1.40:1337/menu.json',
 
 		init:function(){
 			this.ajaxAlice();
@@ -26,15 +26,14 @@
 		ajaxDoneAlice: function(alice){
 			var converter = new showdown.Converter();
 			var html = converter.makeHtml(alice);
-			$('#md').text(html);			
+			$('#md').html(html);			
 		},
 
 		ajaxDoneMenu: function(menu){
 			var allMenu = menu.menu;
+			console.log(allMenu);
 			for(var i = 0; i < allMenu.length; i++){
-				var converter = new showdown.Converter();
-				var html = converter.makeHtml(allMenu[i]);
-				$('#md').text(html);
+				$('ul').append('<li><a data-lien='+i+'href="#">' + allMenu[i].title + '</a></li>');
 			}
 		},
 
