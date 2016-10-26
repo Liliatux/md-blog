@@ -4,7 +4,7 @@ var express = require('express');
 //app où on appel la fonction express
 var app = express();
 
-app.use(express.static('markdown'));
+app.use(express.static('/Public'));
 
 //Indique les différentes routes (url) auxquelles notre appli doit répondre + callback quand quelqu'un demande la route
 app.get('/', function(req, res){

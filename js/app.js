@@ -1,8 +1,8 @@
 (function(){
 	"use strict";
 	var app = {
-		urlAlice:'http://localhost:8000/static/alice.md',
-		urlMenu: 'http://localhost:8000/static/menu.json',
+		urlAlice:'http://localhost:8000/alice.md',
+		urlMenu: 'http://localhost:8000/menu.json',
 
 		init:function(){
 			this.ajaxAlice();
