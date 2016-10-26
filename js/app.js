@@ -1,20 +1,25 @@
 (function(){
 	"use strict";
 	var app = {
-		urlAlice:'http://localhost:8000/alice.md',
-		urlMenu: 'http://localhost:8000/menu.json',
+		url: 'http://192.168.1.28:8000',
+		urlMenu: 'http://192.168.1.28:8000/menu.json',
+		allMenu: null,
 
 		init:function(){
-			this.ajaxAlice();
 			this.ajaxMenu();
-
+			this.listener();
 		},
 
-		ajaxAlice: function(){
-			$.ajax(this.urlAlice)
-			.done(this.ajaxDoneAlice)
-			.fail(this.ajaxFail)
-			.always(this.ajaxAlways);
+		listener : function(){
+			$('#menu').on('click','a', function(){
+				var index = $(this).data('lien');
+				app.getUrl(index);
+			});
+		},
+
+		getUrl: function(index){
+			var newUrl = this.url + this.allMenu[index].path;
+			app.ajaxRequest(newUrl);
 		},
 
 		ajaxMenu: function(){
@@ -24,18 +29,26 @@
 			.always(this.ajaxAlways);
 		},
 
-		ajaxDoneAlice: function(alice){
-			var converter = new showdown.Converter();
-			var html = converter.makeHtml(alice);
-			$('#md').html(html);			
+		ajaxDoneMenu: function(menu){
+			console.log(menu);
+			app.allMenu = menu.menu;
+			for(var i = 0; i < app.allMenu.length; i++){
+				$('ul').append('<li><a data-lien='+i+'>' + app.allMenu[i].title + '</a></li>');
+			}
 		},
 
-		ajaxDoneMenu: function(menu){
-			var url = 'http://localhost:8000';
-			var allMenu = menu.menu;
-			for(var i = 0; i < allMenu.length; i++){
-				$('ul').append('<li><a href='+url+allMenu[i].path+'>' + allMenu[i].title + '</a></li>');
-			}
+		ajaxRequest: function(newUrl){
+			$.ajax(newUrl)
+			.done(this.ajaxDoneRequest)
+			.fail(this.ajaxFail)
+			.ajaxAlways(this.ajaxAlways);
+		},
+
+
+		ajaxDoneRequest: function(request){
+			var converter = new showdown.Converter();
+			var html = converter.makeHtml(request);
+			$('#md').html(html);
 		},
 
 		ajaxFail: function(){
@@ -45,6 +58,7 @@
 		ajaxAlways: function(){
 			console.log('always');
 		}
+
 	};
 
 
@@ -52,3 +66,9 @@
 		app.init();
 	});
 })();
+				/*
+				if($('a').data('Markdown Example')){
+					this.ajaxMarkdown();
+				} else if ($('a').data('Alice in wonderland')){
+					this.ajaxAlice();
+				}*/
