@@ -33,7 +33,7 @@
 			console.log(menu);
 			app.allMenu = menu.menu;
 			for(var i = 0; i < app.allMenu.length; i++){
-				$('ul').append('<li><a data-lien='+i+'>' + app.allMenu[i].title + '</a></li>');
+				$('ul').append('<li><a data-lien='+i+' href="#"">' + app.allMenu[i].title + '</a></li>' + " | ");
 			}
 		},
 
