@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Markdown Blog</title>
+	<link rel="stylesheet" href="/node_modules/semantic-ui-css/semantic.css">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<div class="header">
+		<a href="/ajout.html">Ajouter un article </a>
+		<a href="/edit.html"> Editer un article</a>
+	</div>
+
+	<div id="app">
+		<!--Articles contenus dans le fichier menu.json-->
+		<div id="menu"></div>
+		<!--Contenu de la page-->
+		<div id="md"></div>
+	</div>
+	
+	<script src="/node_modules/jquery/dist/jquery.js"></script>
+	<script src="/node_modules/showdown/dist/showdown.js"></script>
+	<script src="/js/app.js"></script>
+</body>
+</html>
