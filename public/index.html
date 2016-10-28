@@ -7,16 +7,17 @@
 	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<div class="header">
-		<a href="/ajout.html">Ajouter un article </a>
-		<a href="/edit.html"> Editer un article</a>
+	<div class="ui two top attached black buttons">
+	    <div class="ui button"><a href="/ajout.html">Ajouter un article </a></div>
+	    <div class="ui button"><a href="/edit.html"> Editer un article</a></div>
 	</div>
-
-	<div id="app">
-		<!--Articles contenus dans le fichier menu.json-->
-		<div id="menu"></div>
-		<!--Contenu de la page-->
-		<div id="md"></div>
+	<div class="ui grid">
+		<div class="four wide column">
+			<div class="ui vertical fluid tabular menu" id="menu"></div>
+		</div>
+		 <div class="twelve wide stretched column">
+   	 		<div class="ui segment" id="md"></div>
+   	 	</div>
 	</div>
 	
 	<script src="/node_modules/jquery/dist/jquery.js"></script>

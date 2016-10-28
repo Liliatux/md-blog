@@ -1,0 +1,9 @@
+body {
+	font-size: 18px;
+}
+
+.container {
+	padding: 20px;
+	margin: 0 auto;
+	width: 700px;
+}
