@@ -36,7 +36,7 @@
 		ajaxDoneMenu: function(menu){
 			app.allMenu = menu.menu;
 			for(var i = 0; i < app.allMenu.length; i++){
-				$('#menu').append('<a class="item" data-path='+i+'>' + app.allMenu[i].title + '</a>');
+				$('#menu').append('<a class="active item" data-path='+i+'>' + app.allMenu[i].title + '</a>');
 			}
 		},
 

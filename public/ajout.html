@@ -3,25 +3,25 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Ajout de fichier</title>
+	<link rel="stylesheet" href="/node_modules/semantic-ui-css/semantic.css">
+	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<div class="header">
-		<a href="/index.html">Acceuil</a>
+	<div class="ui top attached black button"><a href="/index.html">Acceuil</a></div>
+	<div class="container">
+		<form class="ui form" action="/create" method="post">
+			<h4 class="ui dividing header">Ajoutez l'article</h4>
+			<div class="field">
+				<label for="path">Titre</label>
+				<input type="text" id="path">
+			</div>
+			<div class="field">
+				<label for="content">Contenu</label>
+				<textarea id="content"></textarea>
+			</div>
+			<div class="ui submit violet button">Envoyer</div>
+		</form>
 	</div>
 	<form>
-		<div>
-			<span>Nom du nouveau fichier:</span>
-			<input type="text" name="ajout" id="ajouter">
-		</div>
-		<div>
-			<span>Titre du post</span>
-			<input type="text">
-		</div>
-
-		<div>
-			<span>Contenu du post</span>
-			<textarea></textarea>
-		</div>
-	</form>
 </body>
 </html>
