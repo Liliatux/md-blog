@@ -8,20 +8,23 @@
 </head>
 <body>
 	<div class="ui top attached black button"><a href="/index.html">Acceuil</a></div>
+
 	<div class="container">
-		<form class="ui form" action="/create" method="post">
-			<h4 class="ui dividing header">Ajoutez l'article</h4>
+		<form class="ui form" action="/Article" method="post">
+			<h4 class="ui dividing header">Ajouter un article</h4>
 			<div class="field">
-				<label for="path">Titre</label>
-				<input type="text" id="path">
+				<label for="title">Titre</label>
+				<input type="text" id="title">
 			</div>
 			<div class="field">
 				<label for="content">Contenu</label>
 				<textarea id="content"></textarea>
 			</div>
-			<div class="ui submit violet button">Envoyer</div>
+			<button class="ui button violet">Envoyer</button>
 		</form>
 	</div>
-	<form>
+	
+	<script src="node_modules/jquery/dist/jquery.js"></script>
+	<script src="js/ajout.js"></script>
 </body>
 </html>

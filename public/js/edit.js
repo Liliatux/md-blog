@@ -1,23 +1,35 @@
 (function(){
 	var app = {
+		url: '/menu.json',
 
 		init: function(){
 			this.listeners();
 		},
 
 		listeners: function(){
-			$('form').on('submit', this.handleForm.bind(this));
+			$('#formSelect').on('submit', this.selectForm.bind(this));
+			$('#formEdit').on('submit', this.editForm.bind(this));
 		},
 
-		handleForm: function(event){
+		selectForm: function(){
+			$.ajax(this.url)
+			.done(this.selectAjax)
+			.fail(this.failAjax)
+			.always(this.alwaysAjax);
+		},
+
+		selectAjax: function(){
+			$('select').append('<option></option>')
+		},
+
+		editForm: function(event){
 			event.preventDefault();
 			var title = $('#title').val();
 			var content = $('#content').val();
-
 			this.submitForm({title: title, content: content});
 		},
 
-		submitForm: function(){
+		submitForm: function(data){
 			$.ajax({
 				type: "POST",
 				url: $('form').attr('action'),
@@ -27,7 +39,8 @@
 		},
 
 		success: function(){
-			console.log('win!');
+			alert('Article édité');
+			
 		}
 	}
 

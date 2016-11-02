@@ -1,30 +1,42 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-
+const jsesc = require('jsesc');
+var slug = require('slug');
 var app = express();
 
-app.use(express.static(__dirname +'/public'));
+app.use(bodyParser());
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
-app.post('/create', function(req, res){
+app.post('/Article', function(req, res){
 	var post = req.body;
 	var escapedPath = jsesc(slug(post.title)) + '.md';
-	var path = __dirname + '/public' + escapedPath;
+	var path = __dirname + '/public/Article/' + escapedPath;
+	var menuPath = __dirname + '/public/menu.json';
 
-	fs.writeFile(__dirname + '/public/'+ post.path + '.md', post.content, function(err){
+	fs.writeFile(path, post.content, function(err){
 		if(err){
 			console.log(err);
 		}
 	});
 
-	fs.readFile(__dirname + '/public/menu.json', 'utf8', function(err, data){
+	fs.readFile(menuPath, 'utf8', function(err, data){
+		//transformer en objet
 		var content = JSON.parse(data);
+		//mettre l'objet dans le menu
 		content.menu.push({path: escapedPath, title: post.title});
-	})
-	res.json('fichier envoyé');
-})
+		//transformer en string
+		var jsonified = JSON.stringify(content);
+
+		fs.writeFile(menuPath, jsonified, function(err){
+			if(err){
+				console.log(err);
+			}
+		});
+	});
+
+	res.json({message:'fichier envoyé'});
+});
 
 app.listen(2314);

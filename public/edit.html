@@ -10,27 +10,30 @@
 	<div class="ui top attached black button"><a href="/index.html">Acceuil</a></div>
 
 	<div class="container">
-		<form class="ui form" action="/create" method="post">
+		<form class="ui form" id="formSelect" action="/Article" method="get">
 			<h4 class="ui dividing header">Choisissez l'article à éditer</h4>
 			<div class="field">
 				<label for="Article">Articles</label>
 				<select class="ui fluid dropdown" name="articles" id="select">Articles</select>
+					<option value=""></option>
 			</div>
-			<div class="ui submit violet button">Modifier</div>
+			<button class="ui button violet">Modifier</button>
+		</form>
+		<form class="ui form" id="formEdit" action="/Article" method="post">
 			<div class="field">
-				<label for="title">Article choisi</label>
+				<label for="path">Article choisi</label>
 				<input type="hidden" id="title">
 			</div>
 			<h4 class="ui dividing header">Editez l'article</h4>
 			<div class="field">
-				<label for="path">Titre</label>
+				<label for="title">Titre</label>
 				<input type="text" id="path">
 			</div>
 			<div class="field">
 				<label for="content">Contenu</label>
 				<textarea id="content"></textarea>
 			</div>
-			<div class="ui submit violet button">Envoyer</div>
+			<button class="ui button violet">Envoyer</button>
 		</form>
 	</div>
 	

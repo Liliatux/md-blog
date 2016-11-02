@@ -10,7 +10,7 @@
 			this.listener();
 		},
 
-		//quand on clique sur les liens, on est amené sur une page web avec l'url sur serveur et l'url dans le path du menu/json
+		//clique sur les liens = page web avec l'url du serveur + l'url du path dans la menu.json
 		listener : function(){
 			$('#menu').on('click','a', function(){
 				var index = $(this).data('path');
@@ -18,10 +18,10 @@
 			});
 		},
 
-		//création d'une nouvelle url se référant à chaque contenu des path du menu/json
+		//création d'une url se référant à chaque contenu des path du menu/json = articles
 		getUrl: function(index){
-			var newUrl = this.url + this.allMenu[index].path;
-			app.ajaxRequest(newUrl);
+			var urlArticle = this.url + '/Article/' + this.allMenu[index].path;
+			app.ajaxRequest(urlArticle);
 		},
 		
 		//récupérer le fichier menu.json dans le serveur
@@ -41,8 +41,8 @@
 		},
 
 		//récupérer les fichiers contenus dans l'url du serveur et enregistrés dans le menu.json
-		ajaxRequest: function(newUrl){
-			$.ajax(newUrl)
+		ajaxRequest: function(urlArticle){
+			$.ajax(urlArticle)
 			.done(this.ajaxDoneRequest)
 			.fail(this.ajaxFail)
 			.ajaxAlways(this.ajaxAlways);
