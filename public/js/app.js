@@ -14,13 +14,8 @@
 		listener : function(){
 			$('#editer').on('click', this.ajaxMenu.bind(this));
 			$('#formSelect').on('submit', this.selectForm.bind(this));
-			$('#formEdit').on('submit', this.submitForm.bind(this));
 			$('#formAjout').on('submit', this.ajoutForm.bind(this));
-			$('#menu').on('click','a', function(){
-				var index = $(this).data('path');
-				var content = app.urlArticle + '/' + this.menu[index].path;
-				app.ajaxRequest(content);
-			});
+			$('#menu').on('click','a', this.linkMenu);
 		},
 		
 		//Récupération des données du menu.json
@@ -31,7 +26,7 @@
 			.always(this.ajaxAlways);
 		},
 
-		//Affichage des données dans le menu(accueil) et select(page editer)
+		//Affichage des titres du menu.json (dans accueil + select du edit)
 		ajaxDoneMenu: function(menu){
 			app.menu = menu.menu;
 			for(var i = 0; i < app.menu.length; i++){
@@ -40,7 +35,14 @@
 			}
 		},
 
-		//récupérer les fichiers contenus dans l'url du serveur et enregistrés dans le menu.json
+		//Reconnaissance de l'article cliqué
+		linkMenu: function(){
+			var index = $(this).data('path');
+			var content = app.urlArticle + app.menu[index].path;
+			app.ajaxRequest(content);
+		},
+
+		//Récupération du contenu de l'article cliqué
 		ajaxRequest: function(content){
 			$.ajax(content)
 			.done(this.ajaxDoneRequest)
@@ -48,21 +50,11 @@
 			.ajaxAlways(this.ajaxAlways);
 		},
 
-		//convertir, avec le framework showdown, les fichiers md (articles du blog)
+		//Convertis le contenu de l'article.md en html
 		ajaxDoneRequest: function(request){
 			var converter = new showdown.Converter();
 			var html = converter.makeHtml(request);
 			$('#md').html(html);
-		},
-
-		//en cas d'erreur l'afficher dans la console
-		ajaxFail: function(){
-			console.log('fail!');
-		},
-
-		//ce qui est toujours fait
-		ajaxAlways: function(){
-			console.log('always');
 		},
 
 		//Récupération du titre + contenu de l'article entrés dans le formulaire d'ajout
@@ -83,24 +75,13 @@
 			});
 		},
 
-		//Message de l'article envoyé et reset du formulaire
-		success: function(){
-			swal({
-				title:'Posté',
-				text:'Votre article a été posté !',
-				type: success,
-				confirmButtonText:'Back'
-			});
-			$('#formAjout').trigger('reset');		
-		},
-
-		//Récupération de l'article selectionné
+		//Récupération de l'article selectionné et affichage du titre
 		selectForm: function(event){
 			event.preventDefault();
 			var article = $('select').val();
 			var title = app.menu[article].title;
 			var content = app.urlArticle + app.menu[article].path;
-			app.ajaxDoneEdit(title);
+			$('#title').val(title);
 			app.ajaxEdit(content);
 		},
 
@@ -110,27 +91,42 @@
 			.done(this.ajaxDoneEdit)
 			.fail(this.failAjax)
 			.always(this.always);
-		}
-
-		//Convertis le fichier md en html dans les inputs
-		ajaxDoneEdit: function(data, title){
-			var converter = new showdown.Converter();
-			var html = converter.makeHtml(data);
-			$('#title').val(title);
-			$('#content').val(html);
 		},
 
+		//Affichage du contenu de l'article dans l'input 'content'
+		ajaxDoneEdit: function(content){
+			$('#content').val(content);
+		},
+
+		//en cas d'erreur l'afficher dans la console
+		ajaxFail: function(){
+			console.log('fail!');
+		},
+
+		//ce qui est toujours fait
+		ajaxAlways: function(){
+			console.log('always');
+		},
+
+		//Envoie au serveur du titre + contenu de l'article
 		submitForm: function(data){
 			$.ajax({
 				type: "POST",
 				url: $('form').attr('action'),
 				data: data,
 				success: this.success
-			})
+			});
 		},
-
+		
+		//Message de l'article envoyé et reset du formulaire
 		success: function(){
-			alert('Article édité');			
+			swal({
+				title:'Posté',
+				text:'Votre article a été posté !',
+				type:'success',
+				confirmButtonText:'Back'
+			});
+			$('#formAjout').trigger('reset');		
 		}
 	}
 
