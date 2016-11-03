@@ -7,27 +7,26 @@
 	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-	<div class="ui top attached black button"><a href="/index.html">Acceuil</a></div>
+	<div class="ui top attached black button"><a href="/index.html">Accueil</a></div>
 
 	<div class="container">
 		<form class="ui form" id="formSelect" action="/Article" method="get">
 			<h4 class="ui dividing header">Choisissez l'article à éditer</h4>
 			<div class="field">
 				<label for="Article">Articles</label>
-				<select class="ui fluid dropdown" name="articles" id="select">Articles</select>
-					<option value=""></option>
+				<select class="ui fluid dropdown" name="articles" id="select"></select>
 			</div>
 			<button class="ui button violet">Modifier</button>
 		</form>
 		<form class="ui form" id="formEdit" action="/Article" method="post">
 			<div class="field">
 				<label for="path">Article choisi</label>
-				<input type="hidden" id="title">
+				<input type="hidden" id="path">
 			</div>
 			<h4 class="ui dividing header">Editez l'article</h4>
 			<div class="field">
 				<label for="title">Titre</label>
-				<input type="text" id="path">
+				<input type="text" id="title">
 			</div>
 			<div class="field">
 				<label for="content">Contenu</label>
@@ -38,6 +37,7 @@
 	</div>
 	
 	<script src="node_modules/jquery/dist/jquery.js"></script>
-	<script src="js/edit.js"></script>
+	<script src="/node_modules/showdown/dist/showdown.js"></script>
+	<script src="js/app.js"></script>
 </body>
 </html>

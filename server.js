@@ -11,8 +11,8 @@ app.use(express.static(__dirname + '/public'));
 
 app.post('/Article', function(req, res){
 	var post = req.body;
-	var escapedPath = jsesc(slug(post.title)) + '.md';
-	var path = __dirname + '/public/Article/' + escapedPath;
+	var escapedPath = '/' + jsesc(slug(post.title)) + '.md';
+	var path = __dirname + '/public/Article' + escapedPath;
 	var menuPath = __dirname + '/public/menu.json';
 
 	fs.writeFile(path, post.content, function(err){
