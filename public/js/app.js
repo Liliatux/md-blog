@@ -46,8 +46,7 @@
 		ajaxRequest: function(content){
 			$.ajax(content)
 			.done(this.ajaxDoneRequest)
-			.fail(this.ajaxFail)
-			.ajaxAlways(this.ajaxAlways);
+			.fail(this.ajaxFail);
 		},
 
 		//Convertis le contenu de l'article.md en html
@@ -89,8 +88,7 @@
 		ajaxEdit: function(content){
 			$.ajax(content)
 			.done(this.ajaxDoneEdit)
-			.fail(this.failAjax)
-			.always(this.always);
+			.fail(this.failAjax);
 		},
 
 		//Affichage du contenu de l'article dans l'input 'content'
@@ -101,11 +99,6 @@
 		//en cas d'erreur l'afficher dans la console
 		ajaxFail: function(){
 			console.log('fail!');
-		},
-
-		//ce qui est toujours fait
-		ajaxAlways: function(){
-			console.log('always');
 		},
 
 		//Envoie au serveur du titre + contenu de l'article
