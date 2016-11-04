@@ -12,10 +12,10 @@
 
 		//Clique sur les liens et boutons des formulaires
 		listener : function(){
-			$('#editer').on('click', this.ajaxMenu.bind(this));
-			$('#formSelect').on('submit', this.selectForm.bind(this));
+			$('#menu').on('click','a', this.linkArticle);
 			$('#formAjout').on('submit', this.ajoutForm.bind(this));
-			$('#menu').on('click','a', this.linkMenu);
+			$('#formSelect').on('submit', this.selectForm.bind(this));
+			$('#editer').on('click', this.ajaxMenu.bind(this));
 		},
 		
 		//Récupération des données du menu.json
@@ -29,29 +29,29 @@
 		ajaxDoneMenu: function(menu){
 			app.menu = menu.menu;
 			for(var i = 0; i < app.menu.length; i++){
-				$('#menu').append('<a class="active item" data-path='+i+'>' + app.menu[i].title + '</a>');
+				$('#menu').append('<a class="active item" href="'+ app.urlArticle + app.menu[i].path +'">' + app.menu[i].title + '</a>');
 				$('select').append('<option value='+i+'>'+ app.menu[i].title +'</option>');
 			}
 		},
 
 		//Reconnaissance de l'article cliqué
-		linkMenu: function(){
-			var index = $(this).data('path');
-			var content = app.urlArticle + app.menu[index].path;
-			app.ajaxRequest(content);
+		linkArticle: function(event){
+			event.preventDefault();
+			var urlLien = $(this).attr('href');
+			app.ajaxArticle(urlLien);
 		},
 
 		//Récupération du contenu de l'article cliqué
-		ajaxRequest: function(content){
-			$.ajax(content)
-			.done(this.ajaxDoneRequest)
+		ajaxArticle: function(urlLien){
+			$.ajax(urlLien)
+			.done(this.ajaxDoneArticle)
 			.fail(this.ajaxFail);
 		},
 
 		//Convertis le contenu de l'article.md en html
-		ajaxDoneRequest: function(request){
+		ajaxDoneArticle: function(urlLien){
 			var converter = new showdown.Converter();
-			var html = converter.makeHtml(request);
+			var html = converter.makeHtml(urlLien);
 			$('#md').html(html);
 		},
 
@@ -78,22 +78,22 @@
 			event.preventDefault();
 			var article = $('select').val();
 			var title = app.menu[article].title;
-			var content = app.urlArticle + app.menu[article].path;
+			var urlSelect = app.urlArticle + app.menu[article].path;
 			$('#title').val(title);
-			app.ajaxEdit(content);
+			app.ajaxEdit(urlSelect);
 		},
 
 		//Récupération du contenu de l'article selectionné
-		ajaxEdit: function(content){
-			$.ajax(content)
+		ajaxEdit: function(urlSelect){
+			$.ajax(urlSelect)
 			.done(this.ajaxDoneEdit)
 			.fail(this.failAjax)
 			.always(this.always);
 		},
 
 		//Affichage du contenu de l'article dans l'input 'content'
-		ajaxDoneEdit: function(content){
-			$('#content').val(content);
+		ajaxDoneEdit: function(urlSelect){
+			$('#content').val(urlSelect);
 		},
 
 		//en cas d'erreur l'afficher dans la console
