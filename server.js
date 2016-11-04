@@ -9,20 +9,30 @@ var routes = express();
 routes.use(bodyParser());
 routes.use(express.static(__dirname + '/public'));
 
-
 var blog = {
 	
 	newArticle: function(req, res){
 		var post = req.body;
 		var escapedPath = '/' + jsesc(slug(post.title)) + '.md'; //transformer l'article en md
-		var path = __dirname + '/public/Article' + escapedPath; //le mettre dans le dossier article
-		blog.writeArticle(path, post); //l'écrire
+		var path = __dirname + '/public/Article' + escapedPath; //le mettre dans le dossier Article
+		blog.writeNewArticle(path, post); //l'écrire
 		blog.updateMenu(escapedPath, post.title)//le mettre dans menu.json
 		res.json({message:'fichier envoyé'});
-
 	},
 
-	writeArticle: function(path, post){
+	modifArticle: function(req, res){
+		var put = req.body;
+		var escapedPath = '/' + jsesc(slug(put.title)) + '.md'; //transformer l'article en md
+		var path = __dirname + '/public/Article' + escapedPath; //mettre dans le dossier Article
+		fs.writeFile(path, put.content, function(err){
+			if(err){
+				console.log(err);
+			}
+		});
+		res.json({message:'fichier editer'});
+	},
+
+	writeNewArticle: function(path, post){
 		fs.writeFile(path, post.content, function(err){
 			if(err){
 				console.log(err);
@@ -50,5 +60,6 @@ var blog = {
 }
 
 routes.post('/Article', blog.newArticle);
+routes.put('/Article', blog.modifArticle);
 
 routes.listen(2314);

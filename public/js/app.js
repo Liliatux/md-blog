@@ -4,6 +4,7 @@
 		urlMenu: '/menu.json',
 		urlArticle: '/Article',
 		menu: null,
+		title: null,
 
 		init:function(){
 			this.ajaxMenu();
@@ -55,44 +56,27 @@
 			$('#md').html(html);
 		},
 
-		//Récupération du titre + contenu de l'article entrés dans le formulaire d'ajout
-		ajoutForm: function(event){
-			event.preventDefault();
-			var title = $('#title').val();
-			var content = $('#content').val();
-			this.ajaxAjout({title: title, content: content});
-		},
-
-		//Envoyer au serveur les données ajoutées
-		ajaxAjout: function(data){
-			$.ajax({
-				type: "POST",
-				url: $('form').attr('action'),
-				data: data,
-				success: this.success
-			});
-		},
-
 		//Récupération de l'article selectionné et affichage du titre
 		selectForm: function(event){
 			event.preventDefault();
 			var article = $('select').val();
-			var title = app.menu[article].title;
+			this.title = app.menu[article].title;
 			var urlSelect = app.urlArticle + app.menu[article].path;
-			$('#title').val(title);
-			app.ajaxEdit(urlSelect);
+			$('#title').val(this.title);
+			app.ajaxSelect(urlSelect);
+			
 		},
 
 		//Récupération du contenu de l'article selectionné
-		ajaxEdit: function(urlSelect){
+		ajaxSelect: function(urlSelect){
 			$.ajax(urlSelect)
-			.done(this.ajaxDoneEdit)
+			.done(this.ajaxDoneSelect)
 			.fail(this.failAjax)
 			.always(this.always);
 		},
 
 		//Affichage du contenu de l'article dans l'input 'content'
-		ajaxDoneEdit: function(urlSelect){
+		ajaxDoneSelect: function(urlSelect){
 			$('#content').val(urlSelect);
 		},
 
@@ -101,14 +85,38 @@
 			console.log('fail!');
 		},
 
-		//Envoie au serveur du titre + contenu de l'article
-		submitForm: function(data){
+		//Récupération du titre + contenu de l'article entrés dans le formulaire d'ajout
+		ajoutForm: function(event){
+			event.preventDefault();
+			var title = $('#title').val();
+			var content = $('#content').val();
+			if(title === this.title){
+				this.ajaxEdit({title:title, content:content});
+			} else{
+				this.ajaxAjout({title: title, content: content});
+			}
+		},
+
+		//Envoie au serveur les données ajoutées
+		ajaxAjout: function(data){
 			$.ajax({
 				type: "POST",
-				url: $('form').attr('action'),
+				url: $('#formAjout').attr('action'),
 				data: data,
 				success: this.success
 			});
+			this.ajaxMenu();
+		},
+
+		//Demande au serveur de modifier les données
+		ajaxEdit: function(data){
+			$.ajax({
+				type: "PUT",
+				url: $('#formAjout').attr('action'),
+				data: data,
+				success: this.success
+			});
+			this.ajaxMenu();
 		},
 		
 		//Message de l'article envoyé et reset du formulaire
