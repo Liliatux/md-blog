@@ -15,15 +15,14 @@
 			$('#editer').on('click', this.ajaxMenu.bind(this));
 			$('#formSelect').on('submit', this.selectForm.bind(this));
 			$('#formAjout').on('submit', this.ajoutForm.bind(this));
-			$('#menu').on('click','a', this.linkMenu);
+			$('#menu').on('click','a', this.linkArticle);
 		},
 		
 		//Récupération des données du menu.json
 		ajaxMenu: function(){
 			$.ajax(this.urlMenu)
 			.done(this.ajaxDoneMenu)
-			.fail(this.ajaxFail)
-			.always(this.ajaxAlways);
+			.fail(this.ajaxFail);
 		},
 
 		//Affichage des titres du menu.json (dans accueil + select du edit)
@@ -36,21 +35,21 @@
 		},
 
 		//Reconnaissance de l'article cliqué
-		linkMenu: function(){
+		linkArticle: function(){
 			var index = $(this).data('path');
 			var content = app.urlArticle + app.menu[index].path;
-			app.ajaxRequest(content);
+			app.ajaxArticle(content);
 		},
 
 		//Récupération du contenu de l'article cliqué
-		ajaxRequest: function(content){
+		ajaxArticle: function(content){
 			$.ajax(content)
-			.done(this.ajaxDoneRequest)
+			.done(this.ajaxDoneArticle)
 			.fail(this.ajaxFail);
 		},
 
 		//Convertis le contenu de l'article.md en html
-		ajaxDoneRequest: function(request){
+		ajaxDoneArticle: function(request){
 			var converter = new showdown.Converter();
 			var html = converter.makeHtml(request);
 			$('#md').html(html);
